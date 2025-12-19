@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import { BottomNav } from "@/components/bottom-nav"
 import { NotificationButton } from "../components/notifications"

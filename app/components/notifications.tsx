@@ -7,9 +7,12 @@ export function NotificationButton() {
   const [isSupported, setIsSupported] = useState(false)
 
   useEffect(() => {
-    if ("Notification" in window) {
+    if (typeof window !== "undefined" && "Notification" in window) {
       setIsSupported(true)
       setPermission(Notification.permission)
+      console.log("Notificações suportadas. Permissão:", Notification.permission)
+    } else {
+      console.log("Notificações não suportadas")
     }
   }, [])
 
@@ -54,15 +57,19 @@ export function NotificationButton() {
   }
 
   if (!isSupported) {
-    return null
+    return (
+      <p className="text-yellow-500 text-sm">
+        Notificações não são suportadas neste navegador.
+      </p>
+    )
   }
 
   return (
-    <div className="flex flex-col gap-2 px-6 py-4">
+    <div className="flex flex-col gap-2">
       {permission === "default" && (
         <button
           onClick={requestPermission}
-          className="bg-primary text-black px-4 py-2 rounded-lg font-bold text-sm"
+          className="bg-primary text-black px-4 py-2 rounded-lg font-bold text-sm w-full hover:bg-primary/90 transition-colors"
         >
           Permitir Notificações
         </button>
@@ -71,7 +78,7 @@ export function NotificationButton() {
       {permission === "granted" && (
         <button
           onClick={sendTestNotification}
-          className="bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm"
+          className="bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm w-full hover:bg-green-600 transition-colors"
         >
           Testar Notificação (15:00)
         </button>
