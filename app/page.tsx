@@ -99,23 +99,8 @@ export default function HomePage() {
   return (
     <div className="flex h-screen w-full flex-col max-w-md mx-auto bg-luxury-black shadow-2xl overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4">
-        <button className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 transition-colors">
-          <span className="material-symbols-outlined">menu</span>
-        </button>
+      <div className="flex items-center justify-center px-6 py-4">
         <h1 className="font-serif text-2xl font-bold tracking-wide text-gold-gradient">KualoBarber</h1>
-        <div className="relative">
-          <button className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 transition-colors">
-            <span className="material-symbols-outlined">notifications</span>
-          </button>
-          <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-luxury-black"></span>
-        </div>
-      </div>
-
-      {/* Greeting */}
-      <div className="px-6 pt-2 pb-3">
-        <p className="text-white/60 text-sm font-medium">Bom dia,</p>
-        <h2 className="text-2xl font-bold text-white mt-0.5">Arthur Silva</h2>
       </div>
 
       {/* Categories - Slide */}
