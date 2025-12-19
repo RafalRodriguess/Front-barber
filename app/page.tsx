@@ -118,24 +118,26 @@ export default function HomePage() {
       </div>
 
       {/* Categories - Slide */}
-      <div className="w-full overflow-x-auto no-scrollbar py-3 scroll-smooth snap-x snap-mandatory">
-        <div className="flex gap-2 pl-6 pr-6">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg shrink-0 transition-all min-w-[70px] snap-start ${
-                selectedCategory === category.id
-                  ? "bg-primary text-black shadow-lg shadow-primary/20 scale-105"
-                  : "bg-card-black border border-white/10 text-white/80 hover:border-primary/50 active:scale-95"
-              }`}
-            >
-              <span className="material-symbols-outlined text-lg">{category.icon}</span>
-              <span className={`text-[10px] font-medium whitespace-nowrap ${selectedCategory === category.id ? "font-bold" : ""}`}>
-                {category.name}
-              </span>
-            </button>
-          ))}
+      <div className="px-6">
+        <div className="w-full overflow-x-auto no-scrollbar py-3 scroll-smooth snap-x snap-mandatory">
+          <div className="flex gap-2">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg shrink-0 transition-all min-w-[70px] snap-start ${
+                  selectedCategory === category.id
+                    ? "bg-primary text-black shadow-lg shadow-primary/20 scale-105"
+                    : "bg-card-black border border-white/10 text-white/80 hover:border-primary/50 active:scale-95"
+                }`}
+              >
+                <span className="material-symbols-outlined text-lg">{category.icon}</span>
+                <span className={`text-[10px] font-medium whitespace-nowrap ${selectedCategory === category.id ? "font-bold" : ""}`}>
+                  {category.name}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
