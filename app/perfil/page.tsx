@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { BottomNav } from "@/components/bottom-nav"
+import { NotificationButton } from "../components/notifications"
 
 export default function PerfilPage() {
   return (
@@ -87,13 +88,15 @@ export default function PerfilPage() {
             <span className="material-symbols-outlined text-gray-400">chevron_right</span>
           </button>
 
-          <button className="w-full flex items-center justify-between p-4 bg-surface-dark rounded-xl border border-white/5 hover:border-primary/30 transition-all">
-            <div className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-primary">notifications</span>
-              <span className="text-white font-medium">Notificações</span>
+          <div className="w-full bg-surface-dark rounded-xl border border-white/5 p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <span className="material-symbols-outlined text-primary">notifications</span>
+                <span className="text-white font-medium">Notificações</span>
+              </div>
             </div>
-            <span className="material-symbols-outlined text-gray-400">chevron_right</span>
-          </button>
+            <NotificationButton />
+          </div>
 
           <button className="w-full flex items-center justify-between p-4 bg-surface-dark rounded-xl border border-white/5 hover:border-primary/30 transition-all">
             <div className="flex items-center gap-3">

@@ -3,7 +3,6 @@
 import { useState } from "react"
 import Link from "next/link"
 import { BottomNav } from "@/components/bottom-nav"
-import { NotificationButton } from "./components/notifications"
 
 const services = [
   {
@@ -149,9 +148,6 @@ export default function HomePage() {
         </h3>
         <span className="text-xs text-gray-400">{filteredServices.length} serviços</span>
       </div>
-
-      {/* Notifications Test */}
-      <NotificationButton />
 
       {/* Services List - Compact */}
       <div className="flex-1 overflow-y-auto no-scrollbar px-6 pb-24 flex flex-col gap-3">
