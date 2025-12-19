@@ -99,8 +99,22 @@ export default function HomePage() {
   return (
     <div className="flex h-screen w-full flex-col max-w-md mx-auto bg-luxury-black shadow-2xl overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-center px-6 py-4">
+      <div className="flex items-center justify-start px-6 pt-4 pb-3">
         <h1 className="font-serif text-2xl font-bold tracking-wide text-gold-gradient">KualoBarber</h1>
+      </div>
+
+      {/* Search Bar */}
+      <div className="px-6 pb-3">
+        <div className="relative flex items-center">
+          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+            <span className="material-symbols-outlined text-gray-500">search</span>
+          </div>
+          <input
+            type="text"
+            placeholder="Buscar serviços..."
+            className="w-full bg-surface-dark text-white border border-white/10 rounded-full h-12 pl-12 pr-4 placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+          />
+        </div>
       </div>
 
       {/* Categories - Slide */}
@@ -116,7 +130,7 @@ export default function HomePage() {
                   : "bg-card-black border border-white/10 text-white/80 hover:border-primary/50 active:scale-95"
               }`}
             >
-              <span className="material-symbols-outlined text-2xl">{category.icon}</span>
+              <span className="material-symbols-outlined text-xl">{category.icon}</span>
               <span className={`text-xs font-medium whitespace-nowrap ${selectedCategory === category.id ? "font-bold" : ""}`}>
                 {category.name}
               </span>
