@@ -43,3 +43,39 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// Notificações Push
+self.addEventListener('push', (event) => {
+  const options = {
+    body: event.data ? event.data.text() : 'Seu agendamento é hoje às 15:00',
+    icon: '/icon-192x192.png',
+    badge: '/icon-96x96.png',
+    tag: 'agendamento',
+    vibrate: [200, 100, 200],
+    requireInteraction: false,
+  };
+
+  event.waitUntil(
+    self.registration.showNotification('KualoBarber - Agendamento', options)
+  );
+});
+
+// Clique na notificação
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      // Focar ou abrir uma janela
+      for (let i = 0; i < clientList.length; i++) {
+        const client = clientList[i];
+        if (client.url === '/' && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow('/');
+      }
+    })
+  );
+});
+
