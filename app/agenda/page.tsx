@@ -4,15 +4,27 @@ import { useState } from "react"
 import Link from "next/link"
 import { BottomNav } from "@/components/bottom-nav"
 
-const days = [
-  { day: "DOM", date: 13, available: false },
-  { day: "SEG", date: 14, available: true },
-  { day: "TER", date: 15, available: true },
-  { day: "QUA", date: 16, available: true },
-  { day: "QUI", date: 17, available: true },
-  { day: "SEX", date: 18, available: true },
-  { day: "SÁB", date: 19, available: true },
-]
+const getDaysForMonth = (year: number, month: number) => {
+  const daysInMonth = new Date(year, month + 1, 0).getDate()
+  const days = []
+  
+  const dayNames = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"]
+  
+  // Dias do mês atual
+  for (let i = 1; i <= daysInMonth; i++) {
+    const date = new Date(year, month, i)
+    const dayOfWeek = date.getDay()
+    // Marca domingos como não disponíveis
+    const isSunday = dayOfWeek === 0
+    days.push({ 
+      day: dayNames[dayOfWeek], 
+      date: i, 
+      available: !isSunday 
+    })
+  }
+  
+  return days
+}
 
 const timeSlots = {
   morning: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30"],
@@ -23,8 +35,28 @@ const timeSlots = {
 const occupiedSlots = ["09:30", "11:00", "14:00", "16:30", "17:00"]
 
 export default function AgendaPage() {
-  const [selectedDay, setSelectedDay] = useState(14)
+  const [currentDate, setCurrentDate] = useState(new Date())
+  const [selectedDay, setSelectedDay] = useState(new Date().getDate())
   const [selectedTime, setSelectedTime] = useState("15:00")
+
+  const year = currentDate.getFullYear()
+  const month = currentDate.getMonth()
+  const days = getDaysForMonth(year, month)
+
+  const monthNames = [
+    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+  ]
+
+  const handlePrevMonth = () => {
+    setCurrentDate(new Date(year, month - 1, 1))
+    setSelectedDay(1)
+  }
+
+  const handleNextMonth = () => {
+    setCurrentDate(new Date(year, month + 1, 1))
+    setSelectedDay(1)
+  }
 
   return (
     <div className="flex h-screen w-full flex-col max-w-md mx-auto bg-luxury-black shadow-2xl overflow-hidden">
@@ -59,25 +91,33 @@ export default function AgendaPage() {
       {/* Calendar */}
       <div className="flex flex-col gap-4 py-4">
         <div className="flex items-center justify-between px-6">
-          <h3 className="text-lg font-bold text-white">Dezembro 2024</h3>
+          <h3 className="text-lg font-bold text-white">
+            {monthNames[month]} {year}
+          </h3>
           <div className="flex gap-2">
-            <button className="text-gray-500 hover:text-primary transition-colors">
+            <button 
+              onClick={handlePrevMonth}
+              className="text-gray-500 hover:text-primary transition-colors"
+            >
               <span className="material-symbols-outlined text-[20px]">chevron_left</span>
             </button>
-            <button className="text-gray-500 hover:text-primary transition-colors">
+            <button 
+              onClick={handleNextMonth}
+              className="text-gray-500 hover:text-primary transition-colors"
+            >
               <span className="material-symbols-outlined text-[20px]">chevron_right</span>
             </button>
           </div>
         </div>
 
         {/* Days Scroller */}
-        <div className="flex overflow-x-auto no-scrollbar px-6 gap-3 pb-2">
+        <div className="flex overflow-x-auto no-scrollbar px-6 gap-3 pb-2 scroll-smooth snap-x snap-mandatory">
           {days.map((item) => (
             <button
               key={item.date}
               onClick={() => item.available && setSelectedDay(item.date)}
               disabled={!item.available}
-              className={`flex flex-col items-center justify-center min-w-[64px] h-[84px] rounded-xl shrink-0 transition-all ${
+              className={`flex flex-col items-center justify-center min-w-[64px] h-[84px] rounded-xl shrink-0 transition-all snap-start ${
                 selectedDay === item.date
                   ? "bg-primary text-black shadow-[0_0_20px_rgba(250,198,56,0.3)]"
                   : item.available
