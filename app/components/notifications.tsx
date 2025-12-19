@@ -34,25 +34,54 @@ export function NotificationButton() {
     }
   }
 
-  const sendTestNotification = () => {
+  const sendTestNotification = async () => {
     if (permission !== "granted") {
       alert("Por favor, permita notificações primeiro")
       return
     }
 
-    // Teste simples de notificação
-    const notification = new Notification("KualoBarber - Agendamento", {
-      body: "Seu agendamento é hoje às 15:00",
-      icon: "/icon-192x192.png",
-      badge: "/icon-96x96.png",
-      tag: "agendamento-hoje",
-      requireInteraction: false,
-      vibrate: [200, 100, 200],
-    })
+    try {
+      // Tenta usar Service Worker primeiro (melhor para PWA)
+      if ("serviceWorker" in navigator) {
+        const registration = await navigator.serviceWorker.ready
+        
+        await registration.showNotification("KualoBarber - Agendamento", {
+          body: "Seu agendamento é hoje às 15:00",
+          icon: "/icon-192x192.png",
+          badge: "/icon-96x96.png",
+          tag: "agendamento-hoje",
+          requireInteraction: false,
+          vibrate: [200, 100, 200],
+          data: {
+            url: "/",
+          },
+        })
+        console.log("Notificação enviada via Service Worker")
+        return
+      }
+    } catch (error) {
+      console.error("Erro ao enviar via Service Worker:", error)
+    }
 
-    notification.onclick = () => {
-      window.focus()
-      notification.close()
+    // Fallback: usar API de Notificações diretamente
+    try {
+      const notification = new Notification("KualoBarber - Agendamento", {
+        body: "Seu agendamento é hoje às 15:00",
+        icon: "/icon-192x192.png",
+        badge: "/icon-96x96.png",
+        tag: "agendamento-hoje",
+        requireInteraction: false,
+        vibrate: [200, 100, 200],
+      })
+
+      notification.onclick = () => {
+        window.focus()
+        notification.close()
+      }
+      console.log("Notificação enviada via API direta")
+    } catch (error) {
+      console.error("Erro ao enviar notificação:", error)
+      alert("Erro ao enviar notificação: " + error.message)
     }
   }
 
